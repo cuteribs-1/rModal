@@ -29,17 +29,6 @@
 				$(e.target).closest('div.modal').modal('hide');
 			}
 		},
-		delete: function (e) {
-			if (e === true) {
-				$('div.modal').on('hidden.bs.modal', function () {
-					$(this).remove();
-				}).modal('hide');
-			} else {
-				$(e.target).closest('div.modal').on('hidden.bs.modal', function () {
-					$(this).remove();
-				}).modal('hide');
-			}
-		},
 		open: function (options) {
 			options = $.extend({
 				title: '',
@@ -67,6 +56,8 @@
 			if (typeof (options.onHidden) == 'function') {
 				$modal.on('hidden.bs.modal', function (e) { options.onHidden.call(this, e); });
 			}
+
+			$modal.on('hidden.bs.modal', function (e) { $(this).remove(); });
 
 			var sizes = {
 				sm: 'modal-sm',
