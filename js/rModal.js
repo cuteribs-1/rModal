@@ -44,15 +44,18 @@
 			options = $.extend({
 				title: '',
 				subTitle: '',
+				message: '',
 				body: '',
 				css: 'fade',
 				backdrop: true,
-				loading: true,
+				loading: false,
 				size: false,
 				onShown: false,
 				onHidden: false,
 				buttons: false
 			}, options);
+
+			options.body = options.body || options.message;
 
 			var $modal = $('<div class="modal ' + options.css + '"><div class="modal-dialog"><div class="modal-content"></div></div></div>').appendTo('body');
 			$modal.options = options;
@@ -127,10 +130,8 @@
 				default:
 					throw new Error('invalid options');
 			}
-
-			options.body = options.message;
+			
 			this.open(options);
-			return self.$modal;
 		},
 		confirm: function (params, title) {
 			var dfd = $.Deferred();
@@ -164,26 +165,26 @@
 				default:
 					throw new Error('invalid options');
 			}
-
-			options.body = options.message;
+			
 			this.open(options);
 			return dfd.promise();
 		},
 		prompt: function (params, title) {
 			var dfd = $.Deferred();
+			var $modal;
 
-			options = {
+			var options = {
 				title: 'Confirm',
 				buttons: [{
 					label: 'Submit',
 					cssClass: 'btn-primary',
-					close: false,
-					click: function () { dfd.resolve(self.$modal.find('input.prompt-input').val()); }
+					close: true,
+					click: function () { dfd.resolve($modal.find('input.prompt-input').val()); }
 				}, {
 					label: 'Cancel',
 					cssClass: 'btn-danger',
 					close: true,
-					click: function () { dfd.reject(self.$modal.find('input.prompt-input').val()); }
+					click: function () { dfd.reject($modal.find('input.prompt-input').val()); }
 				}]
 			};
 
@@ -204,12 +205,13 @@
 
 			var body = '<label class="control-label">${message}</label><input type="text" class="form-control prompt-input" required autocomplete="on" value="">'.replace('${message}', options.message);
 			options.body = body;
-			this.open(options);
+			$modal = this.open(options);
 			return dfd.promise();
 		},
 		ajax: function (params, title) {
 			var dfd = $.Deferred();
 			var options = {
+				title: 'Ajax Content',
 				loading: true
 			};
 

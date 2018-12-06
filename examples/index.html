@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+			crossorigin="anonymous"
+		/>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body>
+		<div class="jumbotron container">
+			<div class="row">
+				<div class="col-md-12">
+					<a class="btn btn-default alert-button">rModal.alert</a>
+					<a class="btn btn-default confirm-button">rModal.confirm</a>
+					<a class="btn btn-default prompt-button">rModal.prompt</a>
+					<a class="btn btn-default ajax-button">rModal.ajax</a>
+				</div>
+			</div>
+		</div>
+		<script src="../js/rModal.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('.alert-button').on('click', _ => {
+					rModal.alert('This is alert message content');
+				});
+
+				$('.confirm-button').on('click', _ => {
+					rModal.confirm('This is confirm message content').then(
+						_ => {
+							rModal.alert('Yes');
+						},
+						_ => {
+							rModal.alert('No');
+						}
+					);
+				});
+
+				$('.prompt-button').on('click', function() {
+					rModal.prompt('This is prompt message content').then(
+						input => { rModal.alert(input); }
+					);
+				});
+
+				$('.ajax-button').on('click', function() {
+					rModal.ajax('ajax.html').then(_=> { console.log('ajax done'); });
+				});
+			});
+		</script>
+	</body>
+</html>
