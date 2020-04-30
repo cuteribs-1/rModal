@@ -8,7 +8,7 @@
 	],
 	"dependencies": {
 		"bootstrap": "^3.3.7",
-		"jquery": "^2.0.0"
+		"jquery": "^3.5.0"
 	},
 	"description": "A modal helper for bootstrap.",
 	"homepage": "https://github.com/cuteribs/rModal#readme",
